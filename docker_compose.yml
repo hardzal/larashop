@@ -1,0 +1,12 @@
+version: "3"
+services:  
+  python:
+    image: php:7.2
+    container_name: php7-vscode
+    restart: always #this option will keep your container always running, auto start after turn on your host machine
+    stdin_open: true
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
