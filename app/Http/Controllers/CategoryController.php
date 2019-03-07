@@ -11,9 +11,17 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $categories = \App\Category::paginate(3);
+
+        $filterKeyword = $request->get('name');
+
+        if($filterKeyword) {
+            $categories = \App\Category::where('name', 'LIKE', "%$filterKeyword%")->paginate(3);
+        }
+
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -23,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -34,7 +42,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->get('name');
+
+        $new_category = new \App\Category();
+
+        $new_category->name = $name;
+        
+        if($request->file('image')) {
+            $image_path = $request->file('image')->store('categories_image', 'public');
+
+            $new_category->image = $image_path;
+        }
+
+        $new_category->created_by = \Auth::user()->id;
+
+        $new_category->slug = str_slug($name, '-');
+
+        $new_category->save();
+
+        return redirect()->route('categories.create')->with('status', 'Category successfully created');
     }
 
     /**
@@ -45,7 +71,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = \App\Category::findOrFail($id);
+
+        return view('categories.show', ['category' => $category]);
     }
 
     /**
@@ -56,7 +84,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category_to_edit = \App\Category::findOrFail($id);
+
+        return view('categories.edit', ['category' => $category_to_edit]);
     }
 
     /**
@@ -68,7 +98,28 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->get('name');
+        $slug = $request->get('slug');
+
+        $category = \App\Category::findOrFail($id);
+
+        $category->name = $name;
+        $category->slug = $slug;
+
+        if($request->get('image')) {
+            if($category->iamge && file_exists(storage_path('app/public'. $category->image))) {
+                \Storage::delete('public/'.$category->image);
+            }
+            
+            $new_image = $request->file('image')->store('category_images', 'public');
+
+            $category->image = $new_image;
+        }
+        $category->updated_by = \Auth::user()->id;
+        $category->slug = str_slug($name);
+        $category->save();
+
+        return redirect()->route('categories.edit', ['id' => $id])->with('status', 'Category successfully update');
     }
 
     /**
@@ -79,6 +130,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = \App\Category::findOrFail($id);
+
+        $categoy->delete();
+
+        return redirect()->route('categories.index')->with('status', 'Category successfully moved to trash');
     }
 }
