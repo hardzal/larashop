@@ -1,6 +1,6 @@
 @extends('layouts.global')
 
-@section('title') Categories list @endsection
+@section('title') Trashed categories @endsection
 
 @section('content')
     
@@ -19,33 +19,17 @@
         <div class='col-md-6'>
             <ul class='nav nav-pills card-header-pills'>
                 <li class='nav-item'>
-                    <a class='nav-link active' href="{{ route('categories.index') }}">Published</a>
+                    <a class='nav-link' href="{{ route('categories.index') }}">Published</a>
                 </li>
                 <li class='nav-item'>
-                    <a class='nav-link' href="{{ route('categories.trash') }}">Trash</a>
+                    <a class='nav-link active' href="{{ route('categories.trash') }}">Trash</a>
                 </li>
             </ul>
         </div>
     </div>
 
     <hr class='my-3'>
-
-    <div class='row'>
-        <div class='col-md-12 text-left'>
-            <a href="{{ route('categories.create') }}" class="btn btn-primary">Create category</a>
-        </div>
-    </div><br>
     
-    @if(session('status'))
-        <div class='row'>
-            <div class='col-md-12'>
-                <div class='alert alert-warning'>
-                    {{ session('status') }}
-                </div>
-            </div>
-        </div>
-    @endif
-
     <div class='row'>
         <div class='col-md-12'>
             <table class='table table-bordered table-stripped'>
@@ -71,15 +55,13 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('categories.edit', ['id' => $category->id]) }}" class="btn btn-info btn-sm"/> Edit</a> || 
-                               <a href='{{ route("categories.show", ['id' => $category->id]) }}' class="btn btn-success btn-sm">Detail</a> || 
-                                <form class='d-inline' action="{{ route('categories.destroy', ['id' => $category->id])}}" method="POST" onSubmit="return confirm('Move category to trash?')">
+                                <form class='d-inline' action="{{ route('categories.delete-permanently', ['id' => $category->id])}}" method="POST" onSubmit="return confirm('Delete this category permanently?')">
 
                                     @csrf
 
                                     <input type='hidden' name='_method' value='DELETE'/>
 
-                                    <input type='submit' name='submit' class='btn btn-danger btn-sm' value='Trash'/>
+                                    <input type='submit' name='submit' class='btn btn-danger btn-sm' value='Delete'/>
                                 </form>
                             </td>
                         </tr>
