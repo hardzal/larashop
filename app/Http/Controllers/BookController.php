@@ -151,15 +151,7 @@ class BookController extends Controller
 
         return redirect()->route('books.index')->with('status', 'Book moved to trash');
     }
-
-    public function ajaxSearch(Request $request) {
-        $keyword = $request->get('q');
-
-        $categories = \App\Category::where('name', 'LIKE', "%$keyword%")->get();
-
-        return $categories;
-    }
-
+    
     public function trash() {
         $books = \App\Book::onlyTrashed()->paginate(10);
 

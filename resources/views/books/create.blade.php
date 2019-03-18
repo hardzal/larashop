@@ -22,7 +22,7 @@
                 <br>
 
                 <label for="categories">Categories</label><br>
-                <select name="categories[]" id="categories" class="form-control" multiple></select>
+                <select multiple name="categories[]" id="categories" class="form-control"></select>
                 <br><br/>
 
                 <label for="cover">Cover</label>
@@ -59,15 +59,13 @@
 @endsection
 
 @section('footer-scripts')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-
-    rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-
-    rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     <script type='text/javascript'>
         $('#categories').select2({
             ajax: {
-                url: 'http://larashop.test/ajax/categories/search',
+                url: 'http://toko-online.test/ajax/categories/search',
                 processResults: function(data) {
                     return {
                         results: data.map(function(item) {return{ id: item.id, text: item.name}
