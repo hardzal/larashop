@@ -88,7 +88,7 @@
                                 @csrf
 
                                 <input type='submit' name='submit' value='Restore' class='btn btn-success btn-sm'/>
-                            </form> ||
+                            </form>
                             <form 
                                 method='POST'
                                 clas='d-inline'
