@@ -81,7 +81,7 @@
                         <td>
                             <form 
                                 method='POST'
-                                clas='d-inline'
+                                class='d-inline'
                                 action="{{ route('books.restore', ['id' => $book->id]) }}"
                             >
 

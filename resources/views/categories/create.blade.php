@@ -12,11 +12,17 @@
         @csrf
 
         <label for="name">Category</label>
-        <input type='text' name='name' class='form-control'/>
+        <input type='text' name='name' class='form-control{{ $errors->first('name') ? " is-invalid" : ""}}' value="{{ old('name') }}"/>
+        <div class='invalid-feedback'>
+            {{ $errors->first('name') }}
+        </div>
         <br>
 
         <label for="image">Category Image</label>
-        <input type='file' name='image' class='form-control'/>
+        <input type='file' name='image' class='form-control{{ $errors->first('image') ? " is-invalid" : ""}}'/>
+        <div class="invalid-feedback">
+            {{ $errors->first('image') }}
+        </div>
         <br>
 
         <input type='submit' class='btn btn-primary' value='Save'/>
