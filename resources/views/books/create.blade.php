@@ -18,35 +18,60 @@
                 @csrf
 
                 <label for="title">Title</label><br>
-                <input type='text' class='form-control' name='title' placeholder='book title'/>
+                <input value="{{ old('title') }}" type='text' class='form-control{{ $errors->first('title') ? " is-invalid" : "" }}' name='title' placeholder='book title'/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                </div>
                 <br>
 
                 <label for="categories">Categories</label><br>
-                <select multiple name="categories[]" id="categories" class="form-control"></select>
-                <br><br/>
+                <select multiple name="categories[]" id="categories" class="form-control{{ $errors->first('categories') ? " is-invalid" : "" }}"></select>
+                <br>
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                </div>
+                <br/>
 
                 <label for="cover">Cover</label>
-                <input type='file' class='form-control' name='cover'/>
+                <input type='file' class='form-control{{ $errors->first('cover') ? " is-invalid" : "" }}' name='cover'/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('cover') }}
+                </div>
                 <br>
 
                 <label for='description'>Description</label><br>
-                <textarea name='description' id='description' class='form-control' placeholder='Give a description about this book'></textarea>
+                <textarea name='description' id='description' class='form-control{{ $errors->first('description') ? " is-invalid" : "" }}' placeholder='Give a description about this book'>{{ old('description') }}</textarea>
+                <div class="invalid-feedback">
+                    {{ $errors->first('cover') }}
+                </div>
                 <br>
 
                 <label for="stock">Stock</label><br>
-                <input type='number' class='form-control' id='stock' name='stock' min=0 value=0/>
+                <input type='number' class='form-control{{ $errors->first('stock') ? " is-invalid" : ""}}' id='stock' name='stock' min=0 value={{ old('stock') ? old('stock') : 0 }}/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('stock') }}
+                </div>
                 <br>
 
                 <label for="author">Author</label><br>
-                <input type='text' class='form-control' name='author' id='author' placeholder='Book author'/>
+                <input type='text' class='form-control{{ $errors->first('author') ? " is-invalid" : ""}}' name='author' id='author' placeholder='Book author' value="{{ old('author') }}"/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('author') }}
+                </div>
                 <br>
 
                 <label for='publisher'>Publisher</label><br>
-                <input type='text' class='form-control' id='publisher' name='publisher' placeholder='Book publisher'/>
+                <input type='text' class='form-control{{ $errors->first('publisher') ? " is-invalid" : "" }} id='publisher' name='publisher' placeholder='Book publisher' value="{{ old('publisher') }}"/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('publisher') }}
+                </div>
                 <br>
 
                 <label for='price'>Price</label><br>
-                <input type='number' class='form-control' name='price' id='price' placeholder='book price'/>
+                <input type='number' class='form-control' name='price' id='price' placeholder='book price' value={{ old('price') ? old('price') : 0 }}/>
+                <div class="invalid-feedback">
+                    {{ $errors->first('price') }}
+                </div>
                 <br>
 
                 <button class='btn btn-primary' name='save_action' value='PUBLISH'>Publish</button>
